@@ -3,18 +3,16 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Họ tên: Thân Trọng Thắng | Lớp: DHKTPM19B");
-        System.out.println("------------------------------\n");
 
         long mssv = 23729371;
         String major = "KTPM";
         String originalString = mssv + "-" + major;
 
-        // --- CHẠY DIFFIE-HELLMAN ---
+        // DIFFIE-HELLMAN
         DiffieHellman dh = new DiffieHellman(mssv, major);
         dh.executeKeyExchange();
 
         System.out.println("CHẠY 6 TEST CASES CHO RSA");
-        System.out.println("------------------------------");
 
         runTestCases(mssv, originalString);
     }
@@ -44,7 +42,7 @@ public class Main {
         // Test 2: Truyền p không phải số nguyên tố
         try {
             System.out.println("\n[TEST 2] Cố tình truyền p không phải là số nguyên tố");
-            long fakeP = 23729372; // Số chẵn, chắc chắn không phải số nguyên tố
+            long fakeP = 23729372;
             long q = MathUtils.nextPrime(mssv);
             RSA rsa2 = new RSA(fakeP, q, 35, true);
             System.out.println("-> [FAILED] Lẽ ra phải có Exception ném ra.");
@@ -58,7 +56,6 @@ public class Main {
             System.out.println("\n[TEST 3] Cố tình truyền e không hợp lệ, không cho tự sửa");
             long p = MathUtils.prevPrime(mssv);
             long q = MathUtils.nextPrime(mssv);
-            // phi sẽ là số chẵn. Chọn e = 2 chắc chắn gcd(2, phi) != 1
             RSA rsa3 = new RSA(p, q, 2, false);
             System.out.println("-> [FAILED] Lẽ ra phải có Exception ném ra.");
         } catch (IllegalArgumentException e) {
